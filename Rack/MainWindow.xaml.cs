@@ -23,6 +23,33 @@ namespace Rack
         public MainWindow()
         {
             InitializeComponent();
+            Icon = null;
+        }
+
+        
+
+        private void ButtonOk_Click(object sender, RoutedEventArgs e)
+        {
+            if (!double.TryParse(TextBoxMultuplayer.Text.Trim(), out double multiplayer))
+            {
+                MessageBox.Show($"{TextBoxMultuplayer.Text} must be a number");
+                return;
+            }
+            bool change_tempo = false; //CheckBoxChangeTempo.IsChecked.Value;
+
+            try
+            {
+                Core.Rack(multiplayer, change_tempo);
+                MessageBox.Show("Success!");
+                Ust.Current.Save();
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Got some error:\n\n" +
+                    $"{ex.Message}\n\n" +
+                    $"{ex.StackTrace}");
+            }
         }
     }
 }

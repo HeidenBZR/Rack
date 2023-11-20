@@ -13,5 +13,19 @@ namespace Rack
     /// </summary>
     public partial class App : Application
     {
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            var args = e.Args;
+            if (args != null && args.Count() > 0)
+            {
+                new Ust(args[0]);
+                new MainWindow().Show();
+            }
+            else
+            {
+                MessageBox.Show("Rack is a ust notes stretcher. Please run it as an UTAU plugin.");
+                Shutdown();
+            }
+        }
     }
 }
